@@ -14,7 +14,7 @@
   <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/">NoiseMonkey</a>
+        <a class="navbar-brand" href="/">ImageEditor</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -60,9 +60,7 @@
                 </li>
               </ul>
             </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-            </li>
+            
           </ul>
           <div class="d-flex" role="search">
             <button class="btn btn-outline-success mx-3" type="login">
@@ -79,7 +77,11 @@
  {% with messages = get_flashed_messages(with_categories=true) %}
  {% if messages %}
   {% for category, message in messages %}
-  <li class="{{ category }}">{{ message | safe }}</li>
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Success!</strong>{{ message | safe }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  
   {% endfor %}
   
    {% endif %}
@@ -98,9 +100,10 @@
       <div class="form-floating">
         <select name="operation" class="form-select" id="floatingSelect" aria-label="Floating label select example">
           <option selected>Open this select menu</option>
-          <option value="cgray">cgray</option> 
-          <option value="impulse noise">impulse noise</option>
-          <option value="salt&pepper noise">salt&pepper noise</option>
+          <option value="cgray"> convert to cgray</option> 
+          <option value="cpng">convert to png</option>
+          <option value="cwebp">convert to webp</option>
+          <option value="cjpg"> convert to jpg</option>
         </select>
         <label for="floatingSelect">Select Noise</label>
     </div>

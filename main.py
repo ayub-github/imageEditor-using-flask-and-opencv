@@ -18,10 +18,23 @@ def processImage(filename,operation):
     print(f"the operation is {operation} and file name is {filename}")
     img = cv2.imread(f"uploads/{filename}")
     match operation:
-        case "cgray":
+        case "cgray": 
             imgprocessed= cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-            cv2.imwrite(f"static/{filename}",imgprocessed)
-            return filename
+            newFilename=f"static/{filename}"
+            cv2.imwrite(newFilename,imgprocessed)
+            return newFilename
+        case "cwebp": 
+            newFilename=f"static/{filename.split('.')[0]}.webp"
+            cv2.imwrite(newFilename,img)
+            return newFilename
+        case "cjpg": 
+            newFilename=f"static/{filename.split('.')[0]}.jpg"
+            cv2.imwrite(newFilename,img)
+            return newFilename
+        case "cpng": 
+            newFilename=f"static/{filename.split('.')[0]}.png"
+            cv2.imwrite(newFilename,img)
+            return newFilename
     pass
 
 @app.route('/')
@@ -49,8 +62,8 @@ def edit():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            processImage(filename,operation)
-            flash(f"Your image has been processed and is available <a href='/static/{filename}'>here</a>")
+            new= processImage(filename,operation)
+            flash(f"Your image has been processed and is available <a href='/{new}'target ='_blank' >here</a>")
             return render_template("index.html")
     
     return render_template("index.html") 
